@@ -1,4 +1,4 @@
-package com.bobacadodl.JSONChatLib;
+package com.bobacadodl.jsonchatlib;
 
 import org.json.simple.JSONObject;
 
