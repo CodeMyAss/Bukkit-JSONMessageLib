@@ -42,9 +42,12 @@ public class JSONChatMessage {
             Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
             Object playerCon = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
             String nmsPath = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+
             Class<?> packetClass = Class.forName(nmsPath + ".PacketPlayOutChat");
-            Object packet = packetClass.getConstructor(Class.forName(nmsPath + ".IChatBaseComponent"), boolean.class).newInstance(chatObject.toJSONString(), true);
-                    playerCon.getClass().getMethod("sendPacket", packet.getClass()).invoke(playerCon, packet);
+            Object packet = packetClass.getConstructor(Class.forName(nmsPath + ".IChatBaseComponent"), boolean.class).newInstance(
+                    Class.forName(nmsPath + "ChatComponentText").getConstructor(String.class).newInstance(chatObject.toJSONString()), true);
+
+            playerCon.getClass().getMethod("sendPacket", packet.getClass()).invoke(playerCon, packet);
         }catch(Exception ex) {
             ex.printStackTrace();
         }
