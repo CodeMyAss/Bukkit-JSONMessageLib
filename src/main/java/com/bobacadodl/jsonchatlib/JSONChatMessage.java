@@ -47,7 +47,7 @@ public class JSONChatMessage {
             Object packet = packetClass.getConstructor(Class.forName(nmsPath + ".IChatBaseComponent"), boolean.class).newInstance(
                     Class.forName(nmsPath + ".ChatComponentText").getConstructor(String.class).newInstance(chatObject.toJSONString()), true);
 
-            playerCon.getClass().getMethod("sendPacket", packet.getClass()).invoke(playerCon, packet);
+            playerCon.getClass().getMethod("sendPacket", Class.forName(nmsPath + ".Packet")).invoke(playerCon, packet);
         }catch(Exception ex) {
             ex.printStackTrace();
         }
